@@ -4,6 +4,8 @@
  * Live Environmental API, Gaia AI Chatbot, Chart.js graphs, and accessibility.
  */
 
+import './style.css';
+
 // Global State
 const state = {
   theme: localStorage.getItem('gaia-theme') || 'dark',

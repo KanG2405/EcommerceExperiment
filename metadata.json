@@ -1,0 +1,6 @@
+{
+  "name": "Gaia Smart Earth Store & AI Hub",
+  "description": "A premium eco-commerce store, planetary health dashboard, and Gaia AI assistant for sustainable, safe, and connected future tech.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

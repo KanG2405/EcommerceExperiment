@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gaia Smart Earth — AI for a Sustainable, Safe & Connected World</title>
+  <meta name="description" content="A premium eco-commerce store, planetary health dashboard, and Gaia AI assistant powering clean technology and atmospheric restoration." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Marked CDN for Markdown Rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Custom Circular Cursor -->
+  <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+  </div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-container" aria-hidden="true">
+    <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
+  </div>
+
+  <!-- Skip to Main Content Link -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Premium Preloader -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-content">
+      <div class="preloader-logo">
+        <i data-lucide="globe-2" class="preloader-icon"></i>
+        <span class="preloader-title">GAIA SMART EARTH</span>
+      </div>
+      <div class="preloader-spinner-wrap">
+        <svg class="preloader-svg" viewBox="0 0 50 50">
+          <circle class="preloader-circle-bg" cx="25" cy="25" r="20" fill="none" stroke-width="3"></circle>
+          <circle class="preloader-circle-active" cx="25" cy="25" r="20" fill="none" stroke-width="3"></circle>
+        </svg>
+      </div>
+      <p class="preloader-status" id="preloader-status">Initializing Planetary AI Engine...</p>
+    </div>
+  </div>
+
+  <!-- Header / Sticky Navigation -->
+  <header id="main-header" class="site-header">
+    <div class="header-container">
+      <a href="#" class="brand-logo" aria-label="Gaia Smart Earth Homepage">
+        <div class="logo-icon-wrap">
+          <i data-lucide="leaf" class="logo-icon"></i>
+        </div>
+        <span class="brand-name">GAIA <span class="brand-accent">SMART EARTH</span></span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#store" class="nav-link nav-highlight"><i data-lucide="shopping-bag" class="nav-inline-icon"></i> Eco-Store</a></li>
+          <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+          <li><a href="#live-data" class="nav-link">Live Telemetry</a></li>
+          <li><a href="#gaia-ai" class="nav-link nav-ai-badge"><i data-lucide="sparkles" class="nav-inline-icon"></i> Gaia AI</a></li>
+          <li><a href="#analytics" class="nav-link">Analytics</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Navigation Actions -->
+      <div class="header-actions">
+        <!-- Feature & Product Quick Search Button -->
+        <button id="global-search-btn" class="global-search-pill" aria-label="Search Features & Eco Catalog" title="Search Features (Cmd+K / Ctrl+K)">
+          <i data-lucide="search" class="search-pill-icon"></i>
+          <span class="search-pill-text">Search features...</span>
+          <kbd class="search-pill-shortcut">⌘K</kbd>
+        </button>
+
+        <!-- Topbar Scrollable Apple Sidebar Trigger -->
+        <button id="topbar-sidebar-trigger" class="icon-btn" aria-label="Open Sidebar Navigation Drawer" title="Sidebar Panel Navigation">
+          <i data-lucide="panel-left"></i>
+        </button>
+
+        <!-- Accessibility Controls Menu -->
+        <div class="a11y-dropdown">
+          <button id="a11y-toggle-btn" class="icon-btn" aria-label="Accessibility Options" title="Accessibility Settings">
+            <i data-lucide="accessibility"></i>
+          </button>
+          <div id="a11y-menu" class="a11y-menu hidden" role="region" aria-label="Accessibility settings menu">
+            <div class="a11y-group">
+              <span class="a11y-label">Font Size</span>
+              <div class="font-size-btns">
+                <button id="font-dec-btn" class="a11y-btn" aria-label="Decrease Font Size">A-</button>
+                <button id="font-reset-btn" class="a11y-btn" aria-label="Reset Font Size">Reset</button>
+                <button id="font-inc-btn" class="a11y-btn" aria-label="Increase Font Size">A+</button>
+              </div>
+            </div>
+            <div class="a11y-group">
+              <span class="a11y-label">Contrast</span>
+              <button id="high-contrast-btn" class="a11y-btn toggle-btn" aria-label="Toggle High Contrast Mode">High Contrast: OFF</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+
+        <!-- Shopping Cart Trigger -->
+        <button id="cart-trigger-btn" class="icon-btn cart-btn" aria-label="View Shopping Cart">
+          <i data-lucide="shopping-cart"></i>
+          <span id="cart-count-badge" class="cart-badge">0</span>
+        </button>
+
+        <!-- Gaia AI Quick Assistant Launcher -->
+        <button id="quick-ai-btn" class="btn btn-secondary btn-sm ai-btn-gradient" aria-label="Launch Gaia AI Chat">
+          <i data-lucide="bot"></i>
+          <span>Ask Gaia AI</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="icon-btn mobile-only" aria-label="Open Navigation Menu">
+          <i data-lucide="menu" class="open-icon"></i>
+          <i data-lucide="x" class="close-icon hidden"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- APPLE-STYLE SCROLLABLE TOPBAR SIDEBAR DRAWER -->
+    <div id="apple-sidebar-drawer" class="apple-sidebar-backdrop hidden" aria-hidden="true">
+      <aside class="apple-sidebar-panel">
+        <div class="sidebar-header">
+          <div class="brand-logo">
+            <div class="logo-icon-wrap">
+              <i data-lucide="leaf"></i>
+            </div>
+            <span class="brand-name">GAIA <span class="brand-accent">NEXUS</span></span>
+          </div>
+          <button id="sidebar-close-btn" class="icon-btn" aria-label="Close Navigation Sidebar">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <!-- Sidebar Feature Search Quick Jump -->
+        <div class="sidebar-search-box">
+          <button id="sidebar-search-trigger" class="sidebar-search-btn">
+            <i data-lucide="search"></i>
+            <span>Quick Find Features or Specs...</span>
+            <kbd>⌘K</kbd>
+          </button>
+        </div>
+
+        <!-- Scrollable Navigation Sections -->
+        <div class="sidebar-scroll-content">
+          <div class="sidebar-nav-group">
+            <span class="sidebar-group-title">ECOSYSTEM OVERVIEW</span>
+            <ul class="sidebar-links-list">
+              <li><a href="#about" class="sidebar-link"><i data-lucide="globe-2"></i><span>About Gaia Mission</span></a></li>
+              <li><a href="#features" class="sidebar-link"><i data-lucide="cpu"></i><span>Hardware & Software Specs</span></a></li>
+              <li><a href="#timeline" class="sidebar-link"><i data-lucide="compass"></i><span>2030 Earth Roadmap</span></a></li>
+            </ul>
+          </div>
+
+          <div class="sidebar-nav-group">
+            <span class="sidebar-group-title">FUTURE SMART STORE (12 PRODUCTS)</span>
+            <ul class="sidebar-links-list">
+              <li><a href="#store" class="sidebar-link" data-cat-filter="all"><i data-lucide="shopping-bag"></i><span>All Innovations (12)</span><span class="badge-count">12</span></a></li>
+              <li><a href="#store" class="sidebar-link" data-cat-filter="solar"><i data-lucide="sun"></i><span>Solar & Clean Energy</span></a></li>
+              <li><a href="#store" class="sidebar-link" data-cat-filter="battery"><i data-lucide="battery-charging"></i><span>Energy Storage & Grid</span></a></li>
+              <li><a href="#store" class="sidebar-link" data-cat-filter="water"><i data-lucide="droplet"></i><span>Water Purifiers & Ocean</span></a></li>
+              <li><a href="#store" class="sidebar-link" data-cat-filter="air"><i data-lucide="wind"></i><span>Direct Air Carbon Capture</span></a></li>
+              <li><a href="#store" class="sidebar-link" data-cat-filter="robotics"><i data-lucide="ship"></i><span>Autonomous Rovers & Drones</span></a></li>
+            </ul>
+          </div>
+
+          <div class="sidebar-nav-group">
+            <span class="sidebar-group-title">PLANETARY TELEMETRY & AI</span>
+            <ul class="sidebar-links-list">
+              <li><a href="#dashboard" class="sidebar-link"><i data-lucide="layout-dashboard"></i><span>Live Grid Control Room</span></a></li>
+              <li><a href="#live-data" class="sidebar-link"><i data-lucide="radio"></i><span>Open-Meteo Environmental API</span></a></li>
+              <li><a href="#gaia-ai" class="sidebar-link"><i data-lucide="sparkles"></i><span>Gaia Assistant Chatbot</span></a></li>
+              <li><a href="#analytics" class="sidebar-link"><i data-lucide="line-chart"></i><span>Chart.js Energy Analytics</span></a></li>
+            </ul>
+          </div>
+
+          <!-- Quick Live Telemetry Widget in Sidebar -->
+          <div class="sidebar-telemetry-widget glass-card">
+            <div class="telemetry-widget-header">
+              <span class="live-pulse-dot"></span>
+              <span class="widget-title">Live Grid Status</span>
+            </div>
+            <div class="telemetry-widget-body">
+              <div class="telemetry-metric-row">
+                <span>Grid Efficiency</span>
+                <strong class="text-emerald">98.4%</strong>
+              </div>
+              <div class="telemetry-metric-row">
+                <span>CO₂ Offset Yield</span>
+                <strong class="text-cyan">4.85 Mt/yr</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <p class="sidebar-copyright">© 2026 Gaia Smart Earth Platform. Apple-Style Clean Interface.</p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- GLOBAL FEATURE & STORE SEARCH MODAL (CMD+K / CTRL+K) -->
+    <div id="global-search-modal" class="global-search-backdrop hidden" aria-modal="true" role="dialog">
+      <div class="global-search-card glass-card">
+        <div class="search-modal-header">
+          <i data-lucide="search" class="search-modal-icon"></i>
+          <input type="text" id="global-search-input" placeholder="Search features, hardware, AI prompts, or live telemetry..." autocomplete="off" />
+          <button id="global-search-close-btn" class="icon-btn" aria-label="Close Search Modal"><i data-lucide="x"></i></button>
+        </div>
+
+        <div class="search-modal-body">
+          <div id="global-search-results" class="search-results-list">
+            <!-- Dynamically rendered via JS -->
+          </div>
+        </div>
+
+        <div class="search-modal-footer">
+          <div class="keyboard-hints">
+            <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+            <span><kbd>↵</kbd> select</span>
+            <span><kbd>ESC</kbd> close</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <div id="mobile-nav-drawer" class="mobile-drawer hidden">
+      <nav class="mobile-nav" aria-label="Mobile Navigation">
+        <ul class="mobile-nav-list">
+          <li><a href="#about" class="mobile-nav-link">About Mission</a></li>
+          <li><a href="#features" class="mobile-nav-link">Key Innovations</a></li>
+          <li><a href="#store" class="mobile-nav-link">Eco-Tech Store</a></li>
+          <li><a href="#dashboard" class="mobile-nav-link">Earth Dashboard</a></li>
+          <li><a href="#live-data" class="mobile-nav-link">Live Telemetry</a></li>
+          <li><a href="#gaia-ai" class="mobile-nav-link">Gaia AI Assistant</a></li>
+          <li><a href="#analytics" class="mobile-nav-link">Data Visualization</a></li>
+          <li><a href="#timeline" class="mobile-nav-link">2030 Roadmap</a></li>
+          <li><a href="#faq" class="mobile-nav-link">FAQ</a></li>
+          <li><a href="#contact" class="mobile-nav-link">Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main id="main-content">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero-section">
+      <div class="aurora-background" aria-hidden="true"></div>
+      <div class="section-container hero-container">
+        <div class="hero-content">
+          <div class="hero-badge animate-fade-in">
+            <span class="pulsing-dot"></span>
+            <span>NEXT-GEN ECO-TECH STORE & PLANETARY AI</span>
+          </div>
+
+          <h1 class="hero-title animate-fade-in delay-100">
+            Intelligent Tech for a <span class="gradient-text">Zero-Carbon Future</span>
+          </h1>
+
+          <p class="hero-description animate-fade-in delay-200">
+            Deploy autonomous environmental hardware, AI-driven microgrid solar arrays, and atmospheric sensors. Guided by <strong>Gaia AI</strong> to protect ecosystems and power sustainable connected communities.
+          </p>
+
+          <div class="hero-actions animate-fade-in delay-300">
+            <a href="#store" class="btn btn-primary btn-lg">
+              <i data-lucide="shopping-bag"></i>
+              <span>Explore Eco-Tech Store</span>
+            </a>
+            <a href="#gaia-ai" class="btn btn-glass btn-lg">
+              <i data-lucide="sparkles"></i>
+              <span>Consult Gaia AI</span>
+            </a>
+          </div>
+
+          <!-- Hero Metrics Pills -->
+          <div class="hero-stats-strip animate-fade-in delay-400">
+            <div class="stat-pill">
+              <i data-lucide="shield-check" class="stat-pill-icon"></i>
+              <div>
+                <span class="stat-pill-value">100% Certified</span>
+                <span class="stat-pill-label">Zero-Emission Hardware</span>
+              </div>
+            </div>
+            <div class="stat-pill">
+              <i data-lucide="cpu" class="stat-pill-icon"></i>
+              <div>
+                <span class="stat-pill-value">Gaia AI Integrated</span>
+                <span class="stat-pill-label">Real-time Optimization</span>
+              </div>
+            </div>
+            <div class="stat-pill">
+              <i data-lucide="trees" class="stat-pill-icon"></i>
+              <div>
+                <span class="stat-pill-value">4.8M Tons CO₂</span>
+                <span class="stat-pill-label">Mitigated Annually</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Interactive Preview Visual -->
+        <div class="hero-visual-wrap animate-fade-in delay-300">
+          <div class="hero-card-floating glass-card">
+            <div class="hero-card-header">
+              <div class="status-indicator">
+                <span class="status-dot green"></span>
+                <span class="status-text">Planetary Mesh Active</span>
+              </div>
+              <span class="time-stamp" id="hero-clock">00:00:00 UTC</span>
+            </div>
+            
+            <div class="globe-container">
+              <div class="globe-sphere">
+                <div class="globe-ring ring-1"></div>
+                <div class="globe-ring ring-2"></div>
+                <div class="globe-core">
+                  <i data-lucide="globe" class="globe-icon"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-live-card-body">
+              <div class="metric-row">
+                <span class="metric-label">Clean Grid Yield</span>
+                <span class="metric-val text-emerald">88.4%</span>
+              </div>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar-fill" style="width: 88.4%;"></div>
+              </div>
+
+              <div class="metric-row mt-3">
+                <span class="metric-label">AI Sensor Network</span>
+                <span class="metric-val">142,890 Active</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label">Atmospheric AQI</span>
+                <span class="metric-val text-cyan">Optimal (32)</span>
+              </div>
+            </div>
+
+            <div class="hero-card-footer">
+              <a href="#dashboard" class="btn-text-link">
+                <span>Open Full Operations Room</span>
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / MISSION SECTION -->
+    <section id="about" class="about-section">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-eyebrow">OUR PLANETARY MISSION</span>
+          <h2 class="section-title">Harmonizing Artificial Intelligence with Earth’s Natural Systems</h2>
+          <p class="section-subtitle">
+            Traditional industrial expansion accelerated resource depletion. Gaia Smart Earth combines precision AI robotics, decentralised renewable energy grids, and community eco-commerce to reverse ecological damage.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card glass-card">
+            <div class="about-icon-box bg-emerald-glow">
+              <i data-lucide="sun-medium"></i>
+            </div>
+            <h3>Smart Microgrid Energy</h3>
+            <p>
+              AI-driven solar nanofilms and smart batteries redistribute excess clean power dynamically across urban nodes and rural microgrids, reducing energy waste by up to 42%.
+            </p>
+          </div>
+
+          <div class="about-card glass-card">
+            <div class="about-icon-box bg-cyan-glow">
+              <i data-lucide="droplet"></i>
+            </div>
+            <h3>Autonomous Water Sentinels</h3>
+            <p>
+              Bio-sensing water purifiers and ocean drones identify microplastics, agricultural runoff, and heavy metals in real time, restoring marine ecosystems autonomously.
+            </p>
+          </div>
+
+          <div class="about-card glass-card">
+            <div class="about-icon-box bg-amber-glow">
+              <i data-lucide="tree-pine"></i>
+            </div>
+            <h3>Direct Air Carbon Capture</h3>
+            <p>
+              Compact atmospheric carbon synthesizers absorb environmental CO₂ and safely mineralize it into non-toxic structural building composites.
+            </p>
+          </div>
+
+          <div class="about-card glass-card">
+            <div class="about-icon-box bg-purple-glow">
+              <i data-lucide="bot"></i>
+            </div>
+            <h3>Gaia Ecosystem AI</h3>
+            <p>
+              A commercial-grade intelligence model analyzing planetary satellite feeds, weather patterns, and soil chemistry to provide actionable ecological recommendations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY FEATURES SECTION -->
+    <section id="features" class="features-section">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-eyebrow">ADVANCED HARDWARE & SOFTWARE</span>
+          <h2 class="section-title">Built for Resilience, Engineered for Impact</h2>
+          <p class="section-subtitle">
+            Every product in our store integrates seamlessly into the Gaia AI telemetry mesh, providing verifiable proof of carbon offset and environmental restoration.
+          </p>
+        </div>
+
+        <div class="features-flex">
+          <div class="feature-detail-card glass-card">
+            <div class="feature-badge">ECO-SYSTEM INTEGRATION</div>
+            <h3>Real-Time Hardware Telemetry</h3>
+            <p>
+              Connect your home or commercial eco-hardware directly to the Gaia AI Dashboard. Monitor energy savings, water filtration volumes, and carbon offset credentials in an intuitive dashboard.
+            </p>
+            <ul class="feature-list">
+              <li><i data-lucide="check-circle-2"></i> End-to-end encrypted hardware communication</li>
+              <li><i data-lucide="check-circle-2"></i> Instant carbon credit verification metrics</li>
+              <li><i data-lucide="check-circle-2"></i> Automated AI preventive maintenance alerts</li>
+            </ul>
+          </div>
+
+          <div class="feature-detail-card glass-card">
+            <div class="feature-badge">COMMUNITY CO-ACTION</div>
+            <h3>Verifiable Carbon Offsets</h3>
+            <p>
+              Every eco-store purchase directly funds certified reforestation and ocean recovery programs. Track your individual carbon offset impact with immutable cryptographic receipts.
+            </p>
+            <ul class="feature-list">
+              <li><i data-lucide="check-circle-2"></i> Transparent satellite monitoring of planted trees</li>
+              <li><i data-lucide="check-circle-2"></i> Direct funding for ocean cleanup fleets</li>
+              <li><i data-lucide="check-circle-2"></i> Community carbon reduction leaderboards</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- E-COMMERCE ECO-STORE SECTION -->
+    <section id="store" class="store-section">
+      <div class="section-container">
+        <div class="section-header">
+          <div>
+            <span class="section-eyebrow">PREMIUM ECO-TECH CATALOG</span>
+            <h2 class="section-title">Future Smart Hardware Store</h2>
+            <p class="section-subtitle">
+              Order certified sustainable hardware and smart sensors designed to lower carbon emissions and increase energy independence.
+            </p>
+          </div>
+
+          <!-- Store Controls / Search & Sort -->
+          <div class="store-controls-wrap">
+            <div class="search-input-wrap">
+              <i data-lucide="search" class="search-icon"></i>
+              <input type="text" id="store-search-input" placeholder="Search eco products (e.g., Solar, Water, AI Drone)..." aria-label="Search Eco Products" />
+              <button id="search-clear-btn" class="search-clear-btn hidden" aria-label="Clear Search"><i data-lucide="x"></i></button>
+            </div>
+
+            <div class="sort-wrap">
+              <label for="store-sort-select" class="sr-only">Sort Products</label>
+              <select id="store-sort-select" class="select-input" aria-label="Sort products">
+                <option value="featured">Featured & Popular</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="impact-high">Highest CO₂ Impact</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Category Tabs -->
+        <div class="category-tabs-wrap" role="tablist" aria-label="Product Categories">
+          <button class="category-tab active" data-category="all" role="tab" aria-selected="true">All Innovations</button>
+          <button class="category-tab" data-category="solar" role="tab" aria-selected="false">Solar & Clean Energy</button>
+          <button class="category-tab" data-category="battery" role="tab" aria-selected="false">Energy Storage & Grid</button>
+          <button class="category-tab" data-category="water" role="tab" aria-selected="false">Water & Ocean Clean</button>
+          <button class="category-tab" data-category="air" role="tab" aria-selected="false">Air & Carbon Capture</button>
+          <button class="category-tab" data-category="robotics" role="tab" aria-selected="false">Eco Robotics & Drones</button>
+          <button class="category-tab" data-category="sensors" role="tab" aria-selected="false">Smart Agro Sensors</button>
+          <button class="category-tab" data-category="energy" role="tab" aria-selected="false">Hydrogen & Thermal Power</button>
+        </div>
+
+        <!-- Product Grid Container -->
+        <div id="product-grid" class="product-grid">
+          <!-- Dynamically populated via script.js -->
+        </div>
+
+        <!-- Empty Search State -->
+        <div id="store-empty-state" class="empty-state-box hidden">
+          <i data-lucide="package-search" class="empty-state-icon"></i>
+          <h3>No Matching Eco Hardware Found</h3>
+          <p>Try clearing your search terms or selecting a different product category.</p>
+          <button id="reset-filter-btn" class="btn btn-secondary mt-3">Reset All Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE DASHBOARD SECTION -->
+    <section id="dashboard" class="dashboard-section">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-eyebrow">PLANETARY HEALTH OPERATIONS CONTROL</span>
+          <h2 class="section-title">Smart Earth Live Control Room</h2>
+          <p class="section-subtitle">
+            Simulate grid load adjustments, monitor active environmental telemetry, and observe real-time AI ecosystem intervention alerts.
+          </p>
+        </div>
+
+        <div class="dashboard-wrapper glass-card">
+          <!-- Control Bar -->
+          <div class="dashboard-toolbar">
+            <div class="dash-status">
+              <span class="status-dot green"></span>
+              <span>Gaia Mesh Operational</span>
+              <span class="dash-divider">|</span>
+              <span id="dash-nodes-count">142,890 Active Nodes</span>
+            </div>
+
+            <div class="dash-actions">
+              <button id="dash-sim-btn" class="btn btn-sm btn-secondary">
+                <i data-lucide="play-circle"></i>
+                <span>Run AI Grid Optimization</span>
+              </button>
+              <button id="dash-reset-btn" class="btn btn-sm btn-glass">
+                <i data-lucide="rotate-ccw"></i>
+                <span>Reset Telemetry</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Gauges and Telemetry Grid -->
+          <div class="dash-metrics-grid">
+            <div class="metric-card">
+              <div class="metric-card-header">
+                <span>Renewable Grid Share</span>
+                <i data-lucide="zap" class="icon-emerald"></i>
+              </div>
+              <div class="metric-card-value" id="val-grid-share">84.6%</div>
+              <div class="metric-card-sub">
+                <span class="text-emerald">+3.2% vs last week</span>
+              </div>
+              <div class="meter-bar">
+                <div class="meter-fill bg-emerald" id="bar-grid-share" style="width: 84.6%;"></div>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-card-header">
+                <span>Carbon Sink Rate</span>
+                <i data-lucide="leaf" class="icon-cyan"></i>
+              </div>
+              <div class="metric-card-value" id="val-carbon-sink">12.8 Mt/d</div>
+              <div class="metric-card-sub">
+                <span class="text-cyan">Atmospheric absorption high</span>
+              </div>
+              <div class="meter-bar">
+                <div class="meter-fill bg-cyan" id="bar-carbon-sink" style="width: 76%;"></div>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-card-header">
+                <span>Global AQI Average</span>
+                <i data-lucide="wind" class="icon-amber"></i>
+              </div>
+              <div class="metric-card-value" id="val-aqi-score">34 <small>Good</small></div>
+              <div class="metric-card-sub">
+                <span class="text-amber">94% Cities in green zone</span>
+              </div>
+              <div class="meter-bar">
+                <div class="meter-fill bg-amber" id="bar-aqi-score" style="width: 88%;"></div>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-card-header">
+                <span>Ocean Purity Index</span>
+                <i data-lucide="waves" class="icon-blue"></i>
+              </div>
+              <div class="metric-card-value" id="val-ocean-purity">91.2 / 100</div>
+              <div class="metric-card-sub">
+                <span class="text-blue">Microplastics down 14%</span>
+              </div>
+              <div class="meter-bar">
+                <div class="meter-fill bg-blue" id="bar-ocean-purity" style="width: 91.2%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Grid Load Controls -->
+          <div class="dash-sliders-box">
+            <h4>Simulate AI Grid Strategy Adjustments</h4>
+            <div class="sliders-grid">
+              <div class="slider-group">
+                <label for="slider-solar-priority">Solar Priority Allocation: <strong id="val-slider-solar">85%</strong></label>
+                <input type="range" id="slider-solar-priority" min="50" max="100" value="85" />
+              </div>
+              <div class="slider-group">
+                <label for="slider-carbon-capture">Direct Carbon Capture Power: <strong id="val-slider-carbon">70%</strong></label>
+                <input type="range" id="slider-carbon-capture" min="20" max="100" value="70" />
+              </div>
+              <div class="slider-group">
+                <label for="slider-drone-patrol">Ocean Drone Mesh Density: <strong id="val-slider-drone">90%</strong></label>
+                <input type="range" id="slider-drone-patrol" min="30" max="100" value="90" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Alert Feed -->
+          <div class="dash-alerts-box">
+            <div class="alerts-header">
+              <i data-lucide="bell" class="icon-amber"></i>
+              <span>Live AI Ecosystem Interventions Feed</span>
+            </div>
+            <ul id="dash-alerts-list" class="alerts-list">
+              <li class="alert-item">
+                <span class="alert-time">06:10:14</span>
+                <span class="alert-tag badge-emerald">SOLAR MESH</span>
+                <span class="alert-text">Surplus 450MWh rerouted from Sahara Solar Hub to Mediterranean water desalinators.</span>
+              </li>
+              <li class="alert-item">
+                <span class="alert-time">06:04:22</span>
+                <span class="alert-tag badge-cyan">OCEAN BOT</span>
+                <span class="alert-tag badge-cyan">OCEAN BOT</span>
+                <span class="alert-text">Fleet #18 completed microplastic removal in South Pacific Sector B.</span>
+              </li>
+              <li class="alert-item">
+                <span class="alert-time">05:58:01</span>
+                <span class="alert-tag badge-purple">AIR SYNTH</span>
+                <span class="alert-text">Industrial zone carbon absorption active. CO₂ levels stabilized at 380 ppm.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE DATA SECTION -->
+    <section id="live-data" class="live-data-section">
+      <div class="section-container">
+        <div class="section-header">
+          <div>
+            <span class="section-eyebrow">REAL-TIME PUBLIC API INTEGRATION</span>
+            <h2 class="section-title">Live Environmental & Weather Telemetry</h2>
+            <p class="section-subtitle">
+              Fetch real-time atmospheric, temperature, and air quality metrics from global environmental APIs.
+            </p>
+          </div>
+
+          <div class="live-refresh-box">
+            <button id="api-refresh-btn" class="btn btn-secondary btn-sm">
+              <i data-lucide="refresh-cw" id="refresh-icon"></i>
+              <span>Refresh Live Data</span>
+            </button>
+            <span class="last-updated-text" id="api-updated-time">Last updated: Just now</span>
+          </div>
+        </div>
+
+        <!-- Location Selector for Live Data -->
+        <div class="location-chips-wrap">
+          <span class="chips-label">Select City:</span>
+          <button class="city-chip active" data-city="Tokyo" data-lat="35.6762" data-lon="139.6503">Tokyo, Japan</button>
+          <button class="city-chip" data-city="Oslo" data-lat="59.9139" data-lon="10.7522">Oslo, Norway</button>
+          <button class="city-chip" data-city="Nairobi" data-lat="-1.2921" data-lon="36.8219">Nairobi, Kenya</button>
+          <button class="city-chip" data-city="San Francisco" data-lat="37.7749" data-lon="-122.4194">San Francisco, USA</button>
+          <button class="city-chip" data-city="Singapore" data-lat="1.3521" data-lon="103.8198">Singapore</button>
+        </div>
+
+        <!-- Live Data Display Cards -->
+        <div id="live-data-container" class="live-data-grid">
+          <div class="live-card glass-card">
+            <div class="live-card-icon"><i data-lucide="thermometer"></i></div>
+            <div class="live-card-info">
+              <span class="live-label">Temperature</span>
+              <span class="live-value" id="live-temp">-- °C</span>
+              <span class="live-sub" id="live-temp-sub">Loading live feed...</span>
+            </div>
+          </div>
+
+          <div class="live-card glass-card">
+            <div class="live-card-icon"><i data-lucide="wind"></i></div>
+            <div class="live-card-info">
+              <span class="live-label">Wind Speed & Direction</span>
+              <span class="live-value" id="live-wind">-- km/h</span>
+              <span class="live-sub" id="live-wind-sub">Loading live feed...</span>
+            </div>
+          </div>
+
+          <div class="live-card glass-card">
+            <div class="live-card-icon"><i data-lucide="sun"></i></div>
+            <div class="live-card-info">
+              <span class="live-label">UV Index & Solar Irradiance</span>
+              <span class="live-value" id="live-uv">-- UV</span>
+              <span class="live-sub" id="live-uv-sub">Solar power potential high</span>
+            </div>
+          </div>
+
+          <div class="live-card glass-card">
+            <div class="live-card-icon"><i data-lucide="activity"></i></div>
+            <div class="live-card-info">
+              <span class="live-label">Environmental Status</span>
+              <span class="live-value text-emerald" id="live-status">LIVE OK</span>
+              <span class="live-sub" id="live-source-tag">Source: Open-Meteo Environmental API</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAIA AI CHATBOT CENTERPIECE SECTION -->
+    <section id="gaia-ai" class="gaia-ai-section">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-eyebrow">INTELLIGENT ECO-ASSISTANT</span>
+          <h2 class="section-title">Gaia AI Environmental Consultant</h2>
+          <p class="section-subtitle">
+            Ask Gaia AI about renewable energy calculations, eco-hardware installation, atmospheric carbon capture, and sustainable lifestyle practices.
+          </p>
+        </div>
+
+        <!-- Gaia Chat Container -->
+        <div class="gaia-chat-card glass-card">
+          <!-- Chat Header -->
+          <div class="chat-header">
+            <div class="chat-avatar">
+              <i data-lucide="bot"></i>
+            </div>
+            <div class="chat-header-info">
+              <div class="chat-title-row">
+                <span class="chat-title">Gaia AI</span>
+                <span class="badge-online" id="gaia-online-status">
+                  <span class="status-dot green"></span>
+                  <span id="gaia-status-text">Online & Ready</span>
+                </span>
+              </div>
+              <p class="chat-subtitle">Proprietary Environmental Intelligence Assistant</p>
+            </div>
+            <button id="clear-chat-btn" class="icon-btn" title="Clear Chat History" aria-label="Clear Chat History">
+              <i data-lucide="trash-2"></i>
+            </button>
+          </div>
+
+          <!-- Suggested Prompt Chips -->
+          <div class="suggested-chips-container">
+            <span class="chips-title">Suggested Inquiries:</span>
+            <div class="chips-scroll">
+              <button class="prompt-chip" data-prompt="How does AI optimize solar microgrids?">⚡ Microgrid Solar AI</button>
+              <button class="prompt-chip" data-prompt="Which hardware is best for zero-carbon water filtration?">💧 Water Filtration</button>
+              <button class="prompt-chip" data-prompt="Explain atmospheric direct air carbon capture.">🌿 Carbon Capture</button>
+              <button class="prompt-chip" data-prompt="What eco products should I buy for a zero-emission home?">🏠 Zero-Emission Home</button>
+            </div>
+          </div>
+
+          <!-- Messages Area -->
+          <div id="chat-messages" class="chat-messages-area" role="log" aria-live="polite">
+            <!-- Welcome Message -->
+            <div class="chat-msg msg-assistant">
+              <div class="msg-avatar"><i data-lucide="bot"></i></div>
+              <div class="msg-bubble">
+                <div class="msg-content">
+                  <p>Greetings! I am <strong>Gaia AI</strong>, your environmental and clean technology advisor. How can I assist you in exploring eco-hardware solutions, analyzing carbon metrics, or optimizing energy efficiency today?</p>
+                </div>
+                <div class="msg-time">Just now</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Typing Indicator -->
+          <div id="typing-indicator" class="typing-indicator hidden">
+            <div class="msg-avatar"><i data-lucide="bot"></i></div>
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="typing-text">Gaia AI is analyzing environmental data...</span>
+          </div>
+
+          <!-- Chat Input Bar -->
+          <div class="chat-input-container">
+            <textarea id="chat-input" placeholder="Type your sustainability question here (Press Enter to send, Shift+Enter for new line)..." rows="1" aria-label="Chat Message Input"></textarea>
+            <button id="send-btn" class="btn btn-primary send-btn" aria-label="Send Message">
+              <i data-lucide="send"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA VISUALIZATION SECTION (CHART.JS) -->
+    <section id="analytics" class="analytics-section">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-eyebrow">VERIFIABLE ANALYTICS</span>
+          <h2 class="section-title">Global Sustainability & Energy Data</h2>
+          <p class="section-subtitle">
+            Interactive visual charts demonstrating renewable energy mix, carbon reduction velocity, and air quality progression.
+          </p>
+        </div>
+
+        <div class="charts-grid">
+          <!-- Chart 1: Energy Mix -->
+          <div class="chart-card glass-card">
+            <div class="chart-header">
+              <h3>Global Clean Energy Grid Mix</h3>
+              <div class="chart-actions">
+                <button class="chart-filter-btn active" data-chart="energy" data-year="2026">2026</button>
+                <button class="chart-filter-btn" data-chart="energy" data-year="2030">2030 (Goal)</button>
+              </div>
+            </div>
+            <div class="chart-container-box">
+              <canvas id="chart-energy-mix"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: Carbon Absorption -->
+          <div class="chart-card glass-card">
+            <div class="chart-header">
+              <h3>Annual CO₂ Mitigation (Megatons)</h3>
+              <div class="chart-actions">
+                <button class="chart-filter-btn active" data-chart="carbon" data-view="yearly">Yearly</button>
+                <button class="chart-filter-btn" data-chart="carbon" data-view="cumulative">Cumulative</button>
+              </div>
+            </div>
+            <div class="chart-container-box">
+              <canvas id="chart-carbon-trend"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE / PROCESS SECTION -->
+    <section id="timeline" class="timeline-section">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-eyebrow">ROADMAP TO 2030</span>
+          <h2 class="section-title">Planetary Transformation Roadmap</h2>
+          <p class="section-subtitle">
+            Our strategic milestones toward achieving a zero-emission, AI-connected global grid.
+          </p>
+        </div>
+
+        <div class="timeline-stepper">
+          <div class="timeline-item active">
+            <div class="timeline-marker">2024</div>
+            <div class="timeline-content glass-card">
+              <h3>Gaia Telemetry Mesh 1.0</h3>
+              <p>Deployment of 50,000 smart agricultural sensors and launch of Gaia AI beta for microgrid solar forecasting.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item active">
+            <div class="timeline-marker">2026</div>
+            <div class="timeline-content glass-card">
+              <h3>Global Eco-Hardware Store Launch</h3>
+              <p>Commercial availability of direct air carbon synthesizers, autonomous ocean cleanup fleets, and consumer AI solar film.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker">2028</div>
+            <div class="timeline-content glass-card">
+              <h3>Decentralized Smart Grid Autonomous Nodes</h3>
+              <p>Cross-continental clean energy exchange network optimizing solar, wind, and geothermal power distribution automatically.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker">2030</div>
+            <div class="timeline-content glass-card">
+              <h3>Zero-Carbon Smart Earth Milestone</h3>
+              <p>Target achievement of 100% renewable power reliance in participating cities and complete marine ecosystem restoration.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY / INNOVATION SHOWCASE SECTION -->
+    <section id="gallery" class="gallery-section">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-eyebrow">INNOVATION GALLERY</span>
+          <h2 class="section-title">Hardware Architecture Showcase</h2>
+          <p class="section-subtitle">
+            Explore high-resolution conceptual renders and specifications of our future eco-hardware.
+          </p>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-card glass-card" data-title="AI Solar Quantum Module" data-desc="Ultra-thin flexible nanofilm with 41.2% photovoltaic conversion efficiency.">
+            <div class="gallery-img-placeholder bg-gradient-solar">
+              <i data-lucide="sun"></i>
+            </div>
+            <div class="gallery-info">
+              <h4>Quantum Solar Nanofilm</h4>
+              <p>Flexibility: 360° Bend Radius</p>
+            </div>
+          </div>
+
+          <div class="gallery-card glass-card" data-title="Ocean Autonomous Cleaner" data-desc="Solar-powered autonomous ocean rover collecting surface plastics and filtering micro-debris.">
+            <div class="gallery-img-placeholder bg-gradient-ocean">
+              <i data-lucide="ship"></i>
+            </div>
+            <div class="gallery-info">
+              <h4>Ocean Cleantech Rover</h4>
+              <p>Autonomy: Solar Continuous</p>
+            </div>
+          </div>
+
+          <div class="gallery-card glass-card" data-title="Atmospheric Carbon Synthesizer" data-desc="Direct air capture cell capturing 2.4 tons of ambient CO₂ annually per unit.">
+            <div class="gallery-img-placeholder bg-gradient-air">
+              <i data-lucide="wind"></i>
+            </div>
+            <div class="gallery-info">
+              <h4>Atmospheric Carbon Cell</h4>
+              <p>Capacity: 2.4T CO₂ / Year</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANIMATED STATISTICS SECTION -->
+    <section id="stats" class="stats-section">
+      <div class="section-container">
+        <div class="stats-grid">
+          <div class="stat-box glass-card">
+            <div class="stat-number" data-target="4850000">0</div>
+            <div class="stat-label">Tons CO₂ Mitigated</div>
+          </div>
+          <div class="stat-box glass-card">
+            <div class="stat-number" data-target="142890">0</div>
+            <div class="stat-label">Active Smart Sensors</div>
+          </div>
+          <div class="stat-box glass-card">
+            <div class="stat-number" data-target="98200">0</div>
+            <div class="stat-label">MWh Clean Power Generated</div>
+          </div>
+          <div class="stat-box glass-card">
+            <div class="stat-number" data-target="100">0</div>
+            <div class="stat-unit">%</div>
+            <div class="stat-label">Certified Eco Guarantee</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" class="faq-section">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-eyebrow">FREQUENTLY ASKED QUESTIONS</span>
+          <h2 class="section-title">Common Inquiries</h2>
+          <p class="section-subtitle">
+            Find immediate answers regarding our eco-hardware shipping, Gaia AI integration, and environmental impact credentials.
+          </p>
+        </div>
+
+        <div class="faq-accordion-wrap">
+          <div class="faq-item glass-card">
+            <button class="faq-question" aria-expanded="false">
+              <span>How does Gaia AI integrate with eco-store hardware?</span>
+              <i data-lucide="chevron-down" class="faq-chevron"></i>
+            </button>
+            <div class="faq-answer hidden">
+              <p>Every piece of hardware ordered through our store features an embedded Gaia AI telemetry chip. Once powered, it automatically connects to your secure dashboard to optimize energy consumption and provide real-time performance insights.</p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-card">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my carbon offset impact verified independently?</span>
+              <i data-lucide="chevron-down" class="faq-chevron"></i>
+            </button>
+            <div class="faq-answer hidden">
+              <p>Yes! Every product purchase includes a digital carbon offset certificate verified via third-party satellite telemetry and environmental audits.</p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-card">
+            <button class="faq-question" aria-expanded="false">
+              <span>What happens if the Gaia AI chatbot operates offline?</span>
+              <i data-lucide="chevron-down" class="faq-chevron"></i>
+            </button>
+            <div class="faq-answer hidden">
+              <p>In the event of an internet disruption or backend maintenance, Gaia AI seamlessly switches to its built-in offline environmental knowledge base so you never lose access to essential guides and hardware documentation.</p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-card">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is the shipping policy and environmental packaging guarantee?</span>
+              <i data-lucide="chevron-down" class="faq-chevron"></i>
+            </button>
+            <div class="faq-answer hidden">
+              <p>All hardware orders are shipped carbon-neutrally using zero-emission logistics partners and 100% biodegradable ocean-safe packaging materials.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM & CONSULTATION SECTION -->
+    <section id="contact" class="contact-section">
+      <div class="section-container">
+        <div class="contact-grid">
+          <div class="contact-info-col">
+            <span class="section-eyebrow">GET IN TOUCH</span>
+            <h2 class="section-title">Schedule an Eco-Tech Consultation</h2>
+            <p>
+              Have custom municipal microgrid, commercial solar array, or hardware fleet inquiries? Reach out to our clean tech engineering team.
+            </p>
+
+            <div class="contact-details">
+              <div class="contact-detail-item">
+                <i data-lucide="mail"></i>
+                <div>
+                  <strong>Email Inquiry</strong>
+                  <span>contact@gaiasmart.earth</span>
+                </div>
+              </div>
+              <div class="contact-detail-item">
+                <i data-lucide="map-pin"></i>
+                <div>
+                  <strong>Headquarters</strong>
+                  <span>Gaia Smart Earth Center, Oslo Eco Innovation Hub</span>
+                </div>
+              </div>
+              <div class="contact-detail-item">
+                <i data-lucide="shield"></i>
+                <div>
+                  <strong>Security Guarantee</strong>
+                  <span>100% Data Confidentiality & Privacy Compliant</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form Card -->
+          <div class="contact-form-card glass-card">
+            <form id="eco-contact-form" novalidate>
+              <div class="form-group">
+                <label for="contact-name">Full Name *</label>
+                <input type="text" id="contact-name" name="name" required placeholder="e.g., Dr. Elena Vance" />
+                <span class="form-error" id="error-name">Please enter your full name.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email">Email Address *</label>
+                <input type="email" id="contact-email" name="email" required placeholder="e.g., elena@sustainability.org" />
+                <span class="form-error" id="error-email">Please enter a valid email address.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-interest">Primary Area of Interest</label>
+                <select id="contact-interest" name="interest">
+                  <option value="store">Eco-Hardware Store Bulk Order</option>
+                  <option value="microgrid">Municipal Smart Microgrid</option>
+                  <option value="ai-integration">Gaia AI Enterprise Integration</option>
+                  <option value="partnership">Research & Environmental Partnership</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message">Message / Requirements *</label>
+                <textarea id="contact-message" name="message" rows="4" required placeholder="Describe your sustainability project or hardware inquiry..."></textarea>
+                <span class="form-error" id="error-message">Please provide a message.</span>
+              </div>
+
+              <button type="submit" id="contact-submit-btn" class="btn btn-primary btn-block">
+                <i data-lucide="send"></i>
+                <span>Send Consultation Request</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER SECTION -->
+  <footer class="site-footer">
+    <div class="section-container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <a href="#" class="brand-logo">
+            <div class="logo-icon-wrap">
+              <i data-lucide="leaf" class="logo-icon"></i>
+            </div>
+            <span class="brand-name">GAIA <span class="brand-accent">SMART EARTH</span></span>
+          </a>
+          <p class="footer-desc">
+            Empowering humanity with intelligent AI and certified zero-emission hardware for a clean, safe, and connected future.
+          </p>
+          <div class="footer-badge-pill">
+            <i data-lucide="award"></i>
+            <span>Winner — International Future Earth Competition 2026</span>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#about">About Mission</a></li>
+            <li><a href="#features">Innovations</a></li>
+            <li><a href="#store">Eco-Store</a></li>
+            <li><a href="#dashboard">Control Room</a></li>
+            <li><a href="#live-data">Live Telemetry</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>AI & Data</h4>
+          <ul>
+            <li><a href="#gaia-ai">Gaia AI Assistant</a></li>
+            <li><a href="#analytics">Energy Analytics</a></li>
+            <li><a href="#timeline">2030 Roadmap</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-newsletter-col">
+          <h4>Ecosystem Updates</h4>
+          <p>Subscribe for planetary clean tech reports and store arrivals.</p>
+          <form id="newsletter-form" class="newsletter-form">
+            <input type="email" id="newsletter-email" placeholder="Enter your email..." required aria-label="Newsletter Email Input" />
+            <button type="submit" class="btn btn-primary"><i data-lucide="arrow-right"></i></button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gaia Smart Earth Platform. All rights reserved. Designed for Future Earth Competition.</p>
+        <div class="footer-legal">
+          <span>Privacy Policy</span>
+          <span>•</span>
+          <span>Terms of Service</span>
+          <span>•</span>
+          <span>Carbon Verification Standard</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PRODUCT DETAIL MODAL DIALOG -->
+  <div id="product-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card glass-card">
+      <button id="modal-close-btn" class="modal-close-icon" aria-label="Close modal"><i data-lucide="x"></i></button>
+      
+      <div class="modal-body-grid">
+        <div class="modal-image-col">
+          <div id="modal-img-placeholder" class="modal-img-box bg-gradient-solar">
+            <i data-lucide="package" id="modal-icon"></i>
+          </div>
+          <div class="modal-impact-badge" id="modal-impact-badge">
+            <i data-lucide="leaf"></i>
+            <span id="modal-impact-text">Saves 1.2 Tons CO₂ / Year</span>
+          </div>
+        </div>
+
+        <div class="modal-info-col">
+          <span id="modal-category-tag" class="modal-category">CATEGORY</span>
+          <h2 id="modal-title" class="modal-title">Product Title</h2>
+          <div class="modal-price" id="modal-price">$0.00</div>
+          <p id="modal-description" class="modal-desc">Product detailed description goes here...</p>
+
+          <div class="modal-specs-box">
+            <h4>Hardware Specifications</h4>
+            <ul id="modal-specs-list" class="specs-list">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+
+          <div class="modal-actions-row">
+            <div class="qty-picker">
+              <button id="modal-qty-dec" class="qty-btn" aria-label="Decrease quantity">-</button>
+              <span id="modal-qty-val">1</span>
+              <button id="modal-qty-inc" class="qty-btn" aria-label="Increase quantity">+</button>
+            </div>
+            <button id="modal-add-cart-btn" class="btn btn-primary btn-lg flex-1">
+              <i data-lucide="shopping-cart"></i>
+              <span>Add to Eco Cart</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOPPING CART SLIDE-OVER DRAWER -->
+  <div id="cart-drawer" class="cart-drawer-backdrop hidden" aria-modal="true" role="dialog" aria-labelledby="cart-drawer-title">
+    <div class="cart-drawer-card glass-card">
+      <div class="cart-drawer-header">
+        <div class="cart-header-title">
+          <i data-lucide="shopping-bag"></i>
+          <h3 id="cart-drawer-title">Your Eco-Hardware Cart</h3>
+        </div>
+        <button id="cart-close-btn" class="icon-btn" aria-label="Close Cart"><i data-lucide="x"></i></button>
+      </div>
+
+      <!-- Cart Items List -->
+      <div id="cart-items-list" class="cart-items-list">
+        <!-- Dynamically populated -->
+      </div>
+
+      <!-- Cart Summary Footer -->
+      <div class="cart-drawer-footer">
+        <div class="promo-code-row">
+          <input type="text" id="cart-promo-input" placeholder="Promo code (e.g., SMARTEARTH2026)" aria-label="Promo Code" />
+          <button id="apply-promo-btn" class="btn btn-secondary btn-sm">Apply</button>
+        </div>
+
+        <div class="cart-totals-box">
+          <div class="cart-total-row">
+            <span>Subtotal</span>
+            <span id="cart-subtotal-val">$0.00</span>
+          </div>
+          <div class="cart-total-row">
+            <span>Carbon Offset Donation</span>
+            <span class="text-emerald">FREE ($0.00)</span>
+          </div>
+          <div class="cart-total-row discount-row hidden" id="cart-discount-row">
+            <span>Discount (20% OFF)</span>
+            <span class="text-emerald" id="cart-discount-val">-$0.00</span>
+          </div>
+          <div class="cart-total-row final-total">
+            <span>Total</span>
+            <span id="cart-final-total-val">$0.00</span>
+          </div>
+        </div>
+
+        <div class="cart-impact-strip">
+          <i data-lucide="trees" class="text-emerald"></i>
+          <span id="cart-impact-summary">Total CO₂ Impact Offset: 0.0 Tons</span>
+        </div>
+
+        <button id="cart-checkout-btn" class="btn btn-primary btn-block btn-lg">
+          <i data-lucide="shield-check"></i>
+          <span>Proceed to Eco-Checkout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button id="back-to-top-btn" class="back-to-top-btn hidden" aria-label="Back to Top of Page" title="Back to Top">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
